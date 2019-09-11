@@ -62,7 +62,8 @@ class App extends Component {
 		// data
 		authorities: [],
 		selected_authority: '',
-		selected_year: 2019
+		selected_year: 2018,
+		traffic_points: []
 	};
 
 	componentDidMount = () => {
@@ -81,15 +82,16 @@ class App extends Component {
 		this.setState({ selected_authority: id });
 	}
 
-	getAverageDailyFlow = (auth) => {
-
+	getAverageDailyFlow = () => {
+		trafficHelper.getAnnualAverageDailyFlowByAuthorityAndYear(this.state.selected_authority, this.state.selected_year, data => {
+			this.setState({ traffic_points: data });
+		})
 	}
 
 	getAuthorities = () => {
 		trafficHelper.getLocalAuthorities(auths => {
 			this.setState({ authorities: auths });
 		})
-
 	}
 
 	render() {
@@ -104,8 +106,9 @@ class App extends Component {
 								paper: classes.drawerPaper,
 							}}
 							variant="permanent"
-							open>
-							<Sidebar 
+							open
+						>
+							<Sidebar
 								authorities={this.state.authorities}
 								selected_authority={this.state.selected_authority}
 								selected_year={this.state.selected_year}
@@ -124,6 +127,7 @@ class App extends Component {
 							position={this.state.position}
 							current_position={this.state.current_position}
 							zoom={this.state.zoom}
+							traffic_points={this.state.traffic_points}
 						/>
 					</main>
 					<Details

@@ -67,11 +67,8 @@ class Sidebar extends Component {
     openDetails = () => this.setState({ info_dialog_open: true })
     closeDetails = () => this.setState({ info_dialog_open: false })
 
-    changeYear = (id) => { this.props.changeYear(id) }
-    changeAuthority = (id) => { this.props.changeAuthority(id) }
-
     render() {
-        const { classes } = this.props;
+        const { classes, selected_year, selected_authority, changeYear, changeAuthority } = this.props;
         return (
             <div>
                 <Typography variant="h4" component="h2" gutterBottom>Road Traffic Data</Typography>
@@ -81,14 +78,14 @@ class Sidebar extends Component {
                     <InputLabel htmlFor="sel-year">Year</InputLabel>
                     <Select
                         native
-                        value={this.props.selected_year}
-                        onChange={(e) => this.changeYear(e.target.value)}
+                        value={selected_year}
+                        onChange={(e) => changeYear(e.target.value)}
                         input={<BootstrapInput name="year" id="sel-year" />}
                     >
                         <option value="2016">2016</option>
                         <option value="2017">2017</option>
                         <option value="2018">2018</option>
-                        <option value="2018">2019</option>
+                        <option value="2019">2019</option>
                     </Select>
                 </FormControl>
 
@@ -97,20 +94,20 @@ class Sidebar extends Component {
                     <InputLabel htmlFor="sel-authority">Authority</InputLabel>
                     <Select
                         native
-                        value={this.props.selected_authority}
-                        onChange={(e) => this.changeAuthority(e.target.value)}
+                        value={selected_authority}
+                        onChange={(e) => changeAuthority(e.target.value)}
                         input={<BootstrapInput name="authority" id="sel-authority" />}
                     >
                         <option value="">Choose authority</option>
                         {this.props.authorities.sort((a, b) => { return a.name.localeCompare(b.name) })
                         .map(a => {
-                            return <option value={a.id}>{a.name}</option>
+                            return <option key={a.id} value={a.id}>{a.name}</option>
                         })}
                     </Select>
                 </FormControl>
 
                 <br />
-                <Button color="primary" onClick={() => this.props.getAverageDailyFlow(71)}>Refresh data</Button>
+                <Button color="primary" onClick={() => this.props.getAverageDailyFlow()}>Refresh data</Button>
 
             </div>
         );

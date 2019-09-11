@@ -6,7 +6,7 @@ const config = require('./config.json');
 export function getLocalAuthorities(callback) {
     axios.get(config.cors_proxy + ((config.api + 'local-authorities')), { headers: { origin: 'localhost' } })
         .then(response => {
-            if (response && response.data) {
+            if (response && response.data && response.data.data) {
                 callback(response.data.data);
             } else {
                 callback([]);
@@ -18,13 +18,15 @@ export function getLocalAuthorities(callback) {
 }
 
 export function getAnnualAverageDailyFlowByAuthorityAndYear(authority, year, callback) {
-    axios.get(config.api + 'average-annual-daily-flow-by-direction?filter[local_authority_id]=' + authority + '&filter[year]=' + year)
+    axios.get(config.cors_proxy + config.api + 'average-annual-daily-flow-by-direction?filter[local_authority_id]=' + authority + '&filter[year]=' + year)
         .then(response => {
-            if (response && response.data) {
-                callback(response.data);
+            if (response && response.data && response.data.data) {
+                callback(response.data.data);
             } else {
                 callback([]);
             }
         })
-        .catch(err => callback([]));
+        .catch(err => {
+            callback([]);
+        });
 }

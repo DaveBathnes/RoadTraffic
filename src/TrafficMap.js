@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 // Mapbox GL
-import ReactMapboxGl, { ZoomControl } from "react-mapbox-gl";
+import ReactMapboxGl, { ZoomControl, Layer, Feature } from "react-mapbox-gl";
 
 const Map = ReactMapboxGl({
 	minZoom: 5,
@@ -23,7 +23,7 @@ class TrafficMap extends Component {
 	}
 
 	render() {
-		const { position, zoom, pitch, bearing, fit_bounds } = this.props;
+		const { position, zoom, pitch, bearing, fit_bounds, traffic_points } = this.props;
 
 		return (
 			<Map
@@ -36,6 +36,16 @@ class TrafficMap extends Component {
 				fitBounds={fit_bounds}
 				containerStyle={{ top: 0, bottom: 0, right: 0, left: 0, height: '100vh', width: '100vw', position: 'absolute' }}
 			>
+				<Layer
+					type="circle"
+					id="traffic-points-layer"
+					layout={{}}
+					paint={{}}
+				>
+					{traffic_points.map(tp => {
+						return <Feature key={tp.count_point_id} coordinates={[tp.longitude, tp.latitude]} properties={tp} />
+					})}
+				</Layer>
 				<ZoomControl position="bottom-right" />
 			</Map>
 		);
