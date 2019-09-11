@@ -5,13 +5,18 @@ import { Typography } from '@material-ui/core';
 
 // Material UI
 import Button from '@material-ui/core/Button';
+import Divider from '@material-ui/core/Divider';
+import { fade } from '@material-ui/core/styles/colorManipulator';
 import FormControl from '@material-ui/core/FormControl';
 import InputBase from '@material-ui/core/InputBase';
-import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
+import ListSubheader from '@material-ui/core/ListSubheader';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import { withStyles } from '@material-ui/core/styles';
+
+// Chart JS
+import { HorizontalBar } from 'react-chartjs-2';
 
 const styles = theme => ({
     formControl: {
@@ -68,47 +73,88 @@ class Sidebar extends Component {
     closeDetails = () => this.setState({ info_dialog_open: false })
 
     render() {
-        const { classes, selected_year, selected_authority, changeYear, changeAuthority } = this.props;
+        const { classes, selected_year, selected_authority, changeYear, changeAuthority, traffic_points, theme, percentages } = this.props;
+        const data_setup = {
+            labels: ['HGVs', 'Buses and coaches', 'Cars and taxis', 'Pedal cycles'],
+            datasets: [
+                {
+                    backgroundColor: fade(theme.palette.primary.main, 0.6),
+                    data: [percentages.all_hgvs, percentages.buses_and_coaches, percentages.cars_and_taxis, percentages.pedal_cycles],
+                }
+            ]
+        };
         return (
             <div>
-                <Typography variant="h4" component="h2" gutterBottom>Road Traffic Data</Typography>
-
-                <Typography variant="body1">Choose a year for which data to return</Typography>
+                <Typography variant="h5" component="h5" gutterBottom>Traffic Data</Typography>
+                <ListSubheader>Filters: Annual Average Daily Flow By Direction</ListSubheader>
+                <Divider />
+                <br />
+                <Typography variant="body2">Choose a year to look at traffic flow data for that year.</Typography>
                 <FormControl className={classes.formControl}>
                     <InputLabel htmlFor="sel-year">Year</InputLabel>
                     <Select
-                        native
                         value={selected_year}
                         onChange={(e) => changeYear(e.target.value)}
                         input={<BootstrapInput name="year" id="sel-year" />}
                     >
-                        <option value="2016">2016</option>
-                        <option value="2017">2017</option>
-                        <option value="2018">2018</option>
-                        <option value="2019">2019</option>
+                        <MenuItem value="2016">2016</MenuItem>
+                        <MenuItem value="2017">2017</MenuItem>
+                        <MenuItem value="2018">2018</MenuItem>
                     </Select>
                 </FormControl>
-
-                <Typography variant="body1">Select an authority to retrieve data for that authority.</Typography>
+                <br />
+                <Divider />
+                <br />
+                <Typography variant="body2">Choose an authority to look at traffic flow data for that area.</Typography>
                 <FormControl className={classes.formControl}>
                     <InputLabel htmlFor="sel-authority">Authority</InputLabel>
                     <Select
-                        native
                         value={selected_authority}
                         onChange={(e) => changeAuthority(e.target.value)}
                         input={<BootstrapInput name="authority" id="sel-authority" />}
                     >
-                        <option value="">Choose authority</option>
+                        <MenuItem value="">Choose authority</MenuItem>
                         {this.props.authorities.sort((a, b) => { return a.name.localeCompare(b.name) })
-                        .map(a => {
-                            return <option key={a.id} value={a.id}>{a.name}</option>
-                        })}
+                            .map(a => {
+                                return <MenuItem key={a.id} value={a.id}>{a.name}</MenuItem>
+                            })}
                     </Select>
                 </FormControl>
-
                 <br />
-                <Button color="primary" onClick={() => this.props.getAverageDailyFlow()}>Refresh data</Button>
-
+                <Divider />
+                <br />
+                <Typography variant="body2">To do: add vehicle type and other filters</Typography>
+                <br />
+                <Button color="primary" variant="outlined" onClick={() => this.props.getAverageDailyFlow()}>Refresh data</Button>
+                <br />
+                {
+                    traffic_points.length > 0 ?
+                        <React.Fragment>
+                            <ListSubheader>Charts: Annual Average Daily Flow By Direction</ListSubheader>
+                            <Divider />
+                            <HorizontalBar
+                                data={data_setup}
+                                height={200}
+                                options={{
+                                    maintainAspectRatio: true,
+                                    legend: {
+                                        display: false
+                                    },
+                                    scales: {
+                                        xAxes: [{
+                                            ticks: {
+                                                beginAtZero: true
+                                            },
+                                            scaleLabel: {
+                                                display: true,
+                                                title: 'Percentage'
+                                            }
+                                        }]
+                                    }
+                                }}
+                            />
+                        </React.Fragment> : null
+                }
             </div>
         );
     }
@@ -118,4 +164,4 @@ Sidebar.propTypes = {
     classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles)(Sidebar);
+export default withStyles(styles, { withTheme: true })(Sidebar);

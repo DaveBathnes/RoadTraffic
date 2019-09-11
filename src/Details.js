@@ -7,6 +7,12 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListSubheader from '@material-ui/core/ListSubheader';
 
 import withWidth, { isWidthDown } from '@material-ui/core/withWidth';
 import { withStyles } from '@material-ui/core/styles';
@@ -28,7 +34,7 @@ class Details extends React.Component {
     close = () => { this.props.close() }
 
     render() {
-        const { classes, width } = this.props;
+        const { classes, width, traffic_point } = this.props;
         const fullScreen = isWidthDown('sm', width);
         return (
             <Dialog
@@ -51,6 +57,14 @@ class Details extends React.Component {
             >
                 <DialogTitle id="responsive-dialog-title">Details</DialogTitle>
                 <DialogContent>
+                    <List className={classes.root}>
+                        <ListItem>
+                            <ListItemText primary="Road type" secondary={traffic_point.road_type} />
+                        </ListItem>
+                        <ListItem>
+                            <ListItemText primary="Road name" secondary={traffic_point.road_name} />
+                        </ListItem>
+                    </List>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={() => this.close()} color="secondary">Close</Button>

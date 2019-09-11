@@ -23,7 +23,7 @@ class TrafficMap extends Component {
 	}
 
 	render() {
-		const { position, zoom, pitch, bearing, fit_bounds, traffic_points } = this.props;
+		const { position, zoom, pitch, bearing, fit_bounds, traffic_points, viewPoint } = this.props;
 
 		return (
 			<Map
@@ -39,11 +39,22 @@ class TrafficMap extends Component {
 				<Layer
 					type="circle"
 					id="traffic-points-layer"
-					layout={{}}
-					paint={{}}
+					layout={{
+					}}
+					paint={{
+						'circle-radius': ['/', ['number', ['get', 'all_motor_vehicles'], 5000], 1000],
+						'circle-opacity': 0.5,
+						'circle-color': 'rgb(171, 72, 33)'
+					}}
 				>
 					{traffic_points.map(tp => {
-						return <Feature key={tp.count_point_id} coordinates={[tp.longitude, tp.latitude]} properties={tp} />
+						return (
+							<Feature
+								key={tp.count_point_id}
+								coordinates={[tp.longitude, tp.latitude]}
+								properties={tp}
+								onClick={(mapWithEvt) => { viewPoint(mapWithEvt) }}
+							/>)
 					})}
 				</Layer>
 				<ZoomControl position="bottom-right" />

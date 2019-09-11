@@ -63,7 +63,9 @@ class App extends Component {
 		authorities: [],
 		selected_authority: '',
 		selected_year: 2018,
-		traffic_points: []
+		traffic_points: [],
+		traffic_point: {},
+		percentages: {}
 	};
 
 	componentDidMount = () => {
@@ -71,7 +73,7 @@ class App extends Component {
 		this.getAuthorities();
 	}
 
-	openDetails = () => this.setState({ info_dialog_open: true })
+	openDetails = (traffic_point) => this.setState({ info_dialog_open: true, traffic_point: traffic_point })
 	closeDetails = () => this.setState({ info_dialog_open: false })
 
 	changeYear = (year) => {
@@ -83,14 +85,22 @@ class App extends Component {
 	}
 
 	getAverageDailyFlow = () => {
-		trafficHelper.getAnnualAverageDailyFlowByAuthorityAndYear(this.state.selected_authority, this.state.selected_year, data => {
-			this.setState({ traffic_points: data });
-		})
+		if (this.state.selected_year !== '' && this.state.selected_authority !== '') {
+			trafficHelper.getAnnualAverageDailyFlowByAuthorityAndYear(this.state.selected_authority, this.state.selected_year, data => {
+				this.setState({ traffic_points: data.data, fit_bounds: data.bounds, percentages: data.percentages });
+			})
+		}
+	}
+
+	viewPoint = (mapWithEvt) => {
+		this.openDetails(mapWithEvt.feature.properties);
 	}
 
 	getAuthorities = () => {
 		trafficHelper.getLocalAuthorities(auths => {
-			this.setState({ authorities: auths });
+			if (auths.length > 0) {
+				this.setState({ authorities: auths });
+			}
 		})
 	}
 
@@ -115,6 +125,8 @@ class App extends Component {
 								getAverageDailyFlow={this.getAverageDailyFlow}
 								changeYear={this.changeYear}
 								changeAuthority={this.changeAuthority}
+								traffic_points={this.state.traffic_points}
+								percentages={this.state.percentages}
 							/>
 						</Drawer>
 					</nav>
@@ -128,6 +140,7 @@ class App extends Component {
 							current_position={this.state.current_position}
 							zoom={this.state.zoom}
 							traffic_points={this.state.traffic_points}
+							viewPoint={this.viewPoint}
 						/>
 					</main>
 					<Details
