@@ -146,6 +146,7 @@ class App extends Component {
 					<Details
 						open={this.state.info_dialog_open}
 						close={() => this.closeDetails()}
+						traffic_point={this.state.traffic_point}
 					/>
 				</div>
 			</MuiThemeProvider>
