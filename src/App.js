@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 // Material UI
 import CssBaseline from '@material-ui/core/CssBaseline';
+import Drawer from '@material-ui/core/Drawer';
 
 // MUI Style
 import blue from '@material-ui/core/colors/blue';
@@ -11,7 +12,12 @@ import blueGrey from '@material-ui/core/colors/blueGrey';
 import { MuiThemeProvider, createMuiTheme, withStyles } from '@material-ui/core/styles';
 
 import Details from './Details';
+import Sidebar from './Sidebar';
 import TrafficMap from './TrafficMap';
+
+import * as trafficHelper from './helpers/traffic';
+
+const drawerWidth = 400;
 
 const theme = createMuiTheme({
 	palette: {
@@ -31,38 +37,60 @@ const styles = theme => ({
 	root: {
 		display: 'flex'
 	},
-	toolbar: {
-		display: 'flex',
-		alignItems: 'center',
-		justifyContent: 'flex-end',
-		padding: '0 8px',
-		...theme.mixins.toolbar
-	},
 	content: {
 		flexGrow: 1,
 		padding: theme.spacing(3)
+	},
+	drawerPaper: {
+		width: drawerWidth,
+		padding: 15
 	}
 });
 
 class App extends Component {
 	state = {
+		// screen setup
 		info_dialog_open: false,
-		// map data
+		// map setup
 		fit_bounds: null,
 		position: [-2.1000, 53.6138],
 		zoom: [7],
 		pitch: [0],
 		bearing: [0],
 		distance: 1609,
-		current_position: []
+		current_position: [],
+		// data
+		authorities: [],
+		selected_authority: '',
+		selected_year: 2019
 	};
 
 	componentDidMount = () => {
 		this.setState({});
+		this.getAuthorities();
 	}
 
 	openDetails = () => this.setState({ info_dialog_open: true })
 	closeDetails = () => this.setState({ info_dialog_open: false })
+
+	changeYear = (year) => {
+		this.setState({ selected_year: year });
+	}
+
+	changeAuthority = (id) => {
+		this.setState({ selected_authority: id });
+	}
+
+	getAverageDailyFlow = (auth) => {
+
+	}
+
+	getAuthorities = () => {
+		trafficHelper.getLocalAuthorities(auths => {
+			this.setState({ authorities: auths });
+		})
+
+	}
 
 	render() {
 		const { classes } = this.props;
@@ -70,6 +98,23 @@ class App extends Component {
 			<MuiThemeProvider theme={theme}>
 				<div className={classes.root}>
 					<CssBaseline />
+					<nav className={classes.drawer} aria-label="mailbox folders">
+						<Drawer
+							classes={{
+								paper: classes.drawerPaper,
+							}}
+							variant="permanent"
+							open>
+							<Sidebar 
+								authorities={this.state.authorities}
+								selected_authority={this.state.selected_authority}
+								selected_year={this.state.selected_year}
+								getAverageDailyFlow={this.getAverageDailyFlow}
+								changeYear={this.changeYear}
+								changeAuthority={this.changeAuthority}
+							/>
+						</Drawer>
+					</nav>
 					<main className={classes.content}>
 						<div className={classes.toolbar} />
 						<TrafficMap

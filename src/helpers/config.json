@@ -1,3 +1,4 @@
 {
-    "api": " https://roadtraffic.dft.gov.uk/api/"
+    "cors_proxy": "https://cors-anywhere.herokuapp.com/",
+    "api": "https://roadtraffic.dft.gov.uk/api/"
 }
