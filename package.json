@@ -2,7 +2,7 @@
 	"name": "road-traffic",
 	"version": "0.1.0",
 	"private": true,
-	"homepage": "https://roadtraffic.azurewebsites.net",
+	"homepage": "https://davebathnes.github.io/RoadTraffic/",
 	"dependencies": {
 		"@material-ui/core": "^4.4.0",
 		"@material-ui/icons": "^4.2.1",
