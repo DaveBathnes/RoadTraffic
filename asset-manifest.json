@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.js": "/RoadTraffic/static/js/main.cd4ba7e9.chunk.js",
-    "main.js.map": "/RoadTraffic/static/js/main.cd4ba7e9.chunk.js.map",
+    "main.js": "/RoadTraffic/static/js/main.4f0756d5.chunk.js",
+    "main.js.map": "/RoadTraffic/static/js/main.4f0756d5.chunk.js.map",
     "runtime~main.js": "/RoadTraffic/static/js/runtime~main.b72c4805.js",
     "runtime~main.js.map": "/RoadTraffic/static/js/runtime~main.b72c4805.js.map",
     "static/css/2.e71d8db5.chunk.css": "/RoadTraffic/static/css/2.e71d8db5.chunk.css",
     "static/js/2.311710d0.chunk.js": "/RoadTraffic/static/js/2.311710d0.chunk.js",
     "static/js/2.311710d0.chunk.js.map": "/RoadTraffic/static/js/2.311710d0.chunk.js.map",
     "index.html": "/RoadTraffic/index.html",
-    "precache-manifest.40ae7afc0d71caa129ee4c2d7752be40.js": "/RoadTraffic/precache-manifest.40ae7afc0d71caa129ee4c2d7752be40.js",
+    "precache-manifest.6bcd7a4a60f9af77343bf10f7ac5a59d.js": "/RoadTraffic/precache-manifest.6bcd7a4a60f9af77343bf10f7ac5a59d.js",
     "service-worker.js": "/RoadTraffic/service-worker.js",
     "static/css/2.e71d8db5.chunk.css.map": "/RoadTraffic/static/css/2.e71d8db5.chunk.css.map"
   }
