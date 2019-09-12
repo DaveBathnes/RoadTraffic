@@ -89,7 +89,7 @@ class Sidebar extends Component {
                 <ListSubheader>Filters: Annual Average Daily Flow By Direction</ListSubheader>
                 <Divider />
                 <br />
-                <Typography variant="body2">Choose a year to look at traffic flow data for that year.</Typography>
+                <Typography variant="body2">Choose a year to see traffic flow data for that year.</Typography>
                 <FormControl className={classes.formControl}>
                     <InputLabel htmlFor="sel-year">Year</InputLabel>
                     <Select
@@ -105,7 +105,7 @@ class Sidebar extends Component {
                 <br />
                 <Divider />
                 <br />
-                <Typography variant="body2">Choose an authority to look at traffic flow data for that area.</Typography>
+                <Typography variant="body2">Choose an authority to look at traffic flow data for that area. Map data shown is the tarffic count for all motor vehicles.</Typography>
                 <FormControl className={classes.formControl}>
                     <InputLabel htmlFor="sel-authority">Authority</InputLabel>
                     <Select
@@ -123,7 +123,9 @@ class Sidebar extends Component {
                 <br />
                 <Divider />
                 <br />
-                <Typography variant="body2">To do: add vehicle type and other filters</Typography>
+                <Typography variant="body2">To do: add vehicle type filters</Typography>
+                <Typography variant="body2">To do: add direction filters and map indicators for direction</Typography>
+                <Typography variant="body2">To do: check data source paging to ensure all data shown</Typography>
                 <br />
                 <Button color="primary" variant="outlined" onClick={() => this.props.getAverageDailyFlow()}>Refresh data</Button>
                 <br />
@@ -147,7 +149,7 @@ class Sidebar extends Component {
                                             },
                                             scaleLabel: {
                                                 display: true,
-                                                title: 'Percentage'
+                                                labelString: 'Percentage %'
                                             }
                                         }]
                                     }

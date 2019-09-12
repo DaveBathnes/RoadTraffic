@@ -64,6 +64,9 @@ class Details extends React.Component {
                         <ListItem>
                             <ListItemText primary="Road name" secondary={traffic_point.road_name} />
                         </ListItem>
+                        <ListItem>
+                            <ListItemText primary="To do" secondary="Full information about the traffic point" />
+                        </ListItem>
                     </List>
                 </DialogContent>
                 <DialogActions>
