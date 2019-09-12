@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "7279e65249506f457c510dbaf58bdc7a",
+    "revision": "cf542cfec1d464c115f97771242e56c1",
     "url": "/RoadTraffic/index.html"
   },
   {
@@ -12,8 +12,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/RoadTraffic/static/js/2.311710d0.chunk.js"
   },
   {
-    "revision": "235e6f2ce8a5d9c80434",
-    "url": "/RoadTraffic/static/js/main.4f0756d5.chunk.js"
+    "revision": "4c5d4fe4b25c020a576c",
+    "url": "/RoadTraffic/static/js/main.85104baa.chunk.js"
   },
   {
     "revision": "e80cc0380f34ed27c5d0",
