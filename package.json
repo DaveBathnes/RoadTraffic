@@ -2,7 +2,7 @@
 	"name": "road-traffic",
 	"version": "0.1.0",
 	"private": true,
-	"homepage": "https://davebathnes.github.io/RoadTraffic/",
+	"homepage": "https://davebathnes.github.io/roadtraffic/",
 	"dependencies": {
 		"@material-ui/core": "^4.4.0",
 		"@material-ui/icons": "^4.2.1",
